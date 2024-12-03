@@ -8,9 +8,6 @@ def check_diff(numbers):
             return 1
     return 0
 
-c = 0
-for numbers in data:
-    candidates = [numbers] + list(combinations(numbers, len(numbers) - 1))
-    if any(check_diff(x) for x in candidates):
-        c += 1
-print(c)
+c2 = [any(check_diff(x) for x in [numbers] + list(combinations(numbers, len(numbers) - 1))) for numbers in data].count(True)
+
+print(sum(check_diff(x) for x in data), c2)
