@@ -28,7 +28,6 @@ def do_obstacle_walk(field, current, direction):
         current = next
         field[current] += direction
 
-
 def main():
     field, current = get_data()
     direction = '^'
