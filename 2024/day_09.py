@@ -1,8 +1,5 @@
-ts = []
-for i, n in enumerate(open('input/day_09.txt').read()):
-    if n != '0':
-        ts.append((int(n), str(i//2) if i % 2 == 0 else '.'))
-
+ts = [(int(n), '.' if i % 2 else str(i//2)) for i, n 
+        in enumerate(open('input/day_09.txt').read())]
 
 def solve1(ts):
     r1 = [y for x, n in ts for y in x*[n]]
