@@ -1,6 +1,6 @@
 from collections import defaultdict
 M = {complex(i, t) : y for i, x in enumerate(open('input/day_12.txt').read().split()) for t, y in enumerate(x)}
-    
+                      
 def get_group(c, k, s):
     r = set()
     if c not in M or c in s or M[c] != k:
@@ -22,15 +22,14 @@ for k in M:
 for plots in F.values():
     for plot in plots:
         for p in plot['set']:
-            for pt in [(-1j,-1),(-1,1j),(1j,1),(1,-1j)]:
-                if all(d not in plot['set'] for d in [p + t for t in pt]):
-                    plot['corners'] += 1
+            cc = [(-1j,-1),(-1,1j),(1j,1),(1,-1j)]
+            plot['corners'] += sum(all(x+p not in plot['set'] for x in n) for n in cc)
 
         plot['perim'] = [x+i for i in [1, -1, 1j, -1j] for x in plot['set'] if x+i not in plot['set']]
         for p in set(plot['perim']):
-            for pt in [(-1j,-1, -1-1j),(-1,1j,-1+1j),(1j,1, 1j+1),(1,-1j, 1-1j)]:
-                if all(d in plot['set'] for d in [p + t for t in pt]):
-                    plot['corners'] += 1
+            cc = [(-1j,-1, -1-1j),(-1,1j,-1+1j),(1j,1, 1j+1),(1,-1j, 1-1j)]
+            plot['corners'] += sum(all(x+p in plot['set'] for x in n) for n in cc)
+
 
 r1 = sum(len(plot['set']) * len(set(plot['perim'])) for plots in F.values() for plot in plots)
 r2 = sum(len(plot['set']) * plot['corners'] for plots in F.values() for plot in plots)
