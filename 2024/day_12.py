@@ -1,4 +1,6 @@
 from collections import defaultdict
+
+T = [1, 1j, -1, -1j]
 M = {complex(i, t) : y for i, x in enumerate(open('input/day_12.txt').read().split()) for t, y in enumerate(x)}
                       
 def get_group(c, k, s):
@@ -9,7 +11,7 @@ def get_group(c, k, s):
         r.add(c)
     
     s.add(c)
-    for d in [1, -1, 1j, -1j]:
+    for d in T:
         r |= get_group(c + d, k, s) 
     return r
 
@@ -25,7 +27,7 @@ for plots in F.values():
             cc = [(-1j,-1),(-1,1j),(1j,1),(1,-1j)]
             plot['corners'] += sum(all(x+p not in plot['set'] for x in n) for n in cc)
 
-        plot['perim'] = [x+i for i in [1, -1, 1j, -1j] for x in plot['set'] if x+i not in plot['set']]
+        plot['perim'] = [x+i for i in T for x in plot['set'] if x+i not in plot['set']]
         for p in set(plot['perim']):
             cc = [(-1j,-1, -1-1j),(-1,1j,-1+1j),(1j,1, 1j+1),(1,-1j, 1-1j)]
             plot['corners'] += sum(all(x+p in plot['set'] for x in n) for n in cc)
